@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment and secrets
+*.env
+backend/credentials.json
+
+# IDE and build
+.idea/
+dist/
+.vscode/

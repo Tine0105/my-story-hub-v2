@@ -36,7 +36,7 @@ const Footer = () => {
 
         <div className="border-t border-border mt-8 pt-8 text-center">
           <p className="text-sm text-muted-foreground flex items-center justify-center gap-1">
-            Made with <Heart size={14} className="text-primary fill-primary" /> by MeoHi © 2024
+            Made with <Heart size={14} className="text-primary fill-primary" /> by MeoHi © 2026
           </p>
         </div>
       </div>

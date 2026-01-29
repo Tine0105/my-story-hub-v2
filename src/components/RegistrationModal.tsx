@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { registerUser } from "@/services/api";
 
 interface RegistrationModalProps {
   isOpen: boolean;
@@ -128,29 +129,6 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
     course: preselectedCourse || "",
   });
 
-  // TODO: Replace with your actual Google Form URL after creating it
-  // Format: https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse
-  const GOOGLE_FORM_URL: string = "";
-  
-  // TODO: Map these to your Google Form entry IDs
-  // Find entry IDs by inspecting your Google Form's HTML
-  const FORM_FIELDS: Record<string, string> = {
-    name: "entry.XXXXXXXXXX",
-    phone: "entry.XXXXXXXXXX",
-    age: "entry.XXXXXXXXXX",
-    socialLink: "entry.XXXXXXXXXX",
-    currentLevel: "entry.XXXXXXXXXX",
-    specificLevel: "entry.XXXXXXXXXX",
-    purposes: "entry.XXXXXXXXXX",
-    skills: "entry.XXXXXXXXXX",
-    goals: "entry.XXXXXXXXXX",
-    learningFormats: "entry.XXXXXXXXXX",
-    sessionsPerWeek: "entry.XXXXXXXXXX",
-    previousExperience: "entry.XXXXXXXXXX",
-    source: "entry.XXXXXXXXXX",
-    additionalQuestions: "entry.XXXXXXXXXX",
-    course: "entry.XXXXXXXXXX",
-  };
 
   useEffect(() => {
     if (preselectedCourse) {
@@ -207,75 +185,64 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateStep(currentStep)) return;
+  e.preventDefault();
 
-    setIsSubmitting(true);
+  if (!validateStep(currentStep)) return;
 
-    try {
-      // If Google Form URL is configured, submit to Google Form
-      if (GOOGLE_FORM_URL && GOOGLE_FORM_URL.length > 0) {
-        const formBody = new URLSearchParams();
-        formBody.append(FORM_FIELDS.name, formData.name);
-        formBody.append(FORM_FIELDS.phone, formData.phone);
-        formBody.append(FORM_FIELDS.age, formData.age);
-        formBody.append(FORM_FIELDS.socialLink, formData.socialLink);
-        formBody.append(FORM_FIELDS.currentLevel, formData.currentLevel === "zero" ? "Chưa biết gì" : formData.specificLevel);
-        formBody.append(FORM_FIELDS.purposes, [...formData.purposes, formData.otherPurpose].filter(Boolean).join(", "));
-        formBody.append(FORM_FIELDS.skills, formData.skills.join(", "));
-        formBody.append(FORM_FIELDS.goals, formData.goals);
-        formBody.append(FORM_FIELDS.learningFormats, formData.learningFormats.join(", "));
-        formBody.append(FORM_FIELDS.sessionsPerWeek, formData.sessionsPerWeek);
-        formBody.append(FORM_FIELDS.previousExperience, formData.previousExperience);
-        formBody.append(FORM_FIELDS.source, formData.source === "other" ? formData.otherSource : formData.source);
-        formBody.append(FORM_FIELDS.additionalQuestions, formData.additionalQuestions);
-        formBody.append(FORM_FIELDS.course, formData.course);
+  setIsSubmitting(true);
 
-        await fetch(GOOGLE_FORM_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: formBody.toString(),
-        });
-      }
+  try {
+    const payload = {
+      ...formData,
+      currentLevel:
+        formData.currentLevel === "zero"
+          ? "Chưa biết gì"
+          : formData.specificLevel,
+      purposes: [...formData.purposes, formData.otherPurpose].filter(Boolean),
+      source:
+        formData.source === "other"
+          ? formData.otherSource
+          : formData.source,
+    };
 
-      setIsSuccess(true);
-      toast.success("Đăng ký thành công! Chúng tôi sẽ liên hệ bạn sớm.");
+    // Use centralized API helper which respects VITE_API_BASE_URL
+    await registerUser(payload);
 
-      setTimeout(() => {
-        setIsSuccess(false);
-        setCurrentStep(1);
-        setFormData({
-          name: "",
-          phone: "",
-          age: "",
-          socialLink: "",
-          currentLevel: "",
-          specificLevel: "",
-          purposes: [],
-          otherPurpose: "",
-          skills: [],
-          goals: "",
-          learningFormats: [],
-          sessionsPerWeek: "",
-          previousExperience: "",
-          source: "",
-          otherSource: "",
-          additionalQuestions: "",
-          course: "",
-        });
-        onClose();
-      }, 2000);
-    } catch (error) {
-      console.error("Form submission error:", error);
-      toast.error("Có lỗi xảy ra. Vui lòng thử lại!");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    setIsSuccess(true);
+    toast.success("Đăng ký thành công! Chúng tôi sẽ liên hệ bạn sớm.");
+
+    setTimeout(() => {
+      setIsSuccess(false);
+      setCurrentStep(1);
+      setFormData({
+        name: "",
+        phone: "",
+        age: "",
+        socialLink: "",
+        currentLevel: "",
+        specificLevel: "",
+        purposes: [],
+        otherPurpose: "",
+        skills: [],
+        goals: "",
+        learningFormats: [],
+        sessionsPerWeek: "",
+        previousExperience: "",
+        source: "",
+        otherSource: "",
+        additionalQuestions: "",
+        course: "",
+      });
+      onClose();
+    }, 2000);
+  } catch (error) {
+    console.error("Submit error:", error);
+    toast.error("Có lỗi xảy ra. Vui lòng thử lại!");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   const renderStepIndicator = () => (
     <div className="flex items-center justify-center gap-2 mb-6">
@@ -685,9 +652,12 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                     <h3 className="text-xl font-semibold text-foreground mb-2">
                       Đăng ký thành công!
                     </h3>
-                    <p className="text-muted-foreground text-center">
+                    <p className="text-muted-foreground text-center mb-6">
                       Cảm ơn bạn đã đăng ký. Chúng tôi sẽ liên hệ bạn trong thời gian sớm nhất!
                     </p>
+                    <Button onClick={onClose} variant="outline">
+                      Đóng
+                    </Button>
                   </motion.div>
                 ) : (
                   <motion.div
