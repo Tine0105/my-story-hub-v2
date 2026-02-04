@@ -51,7 +51,10 @@ const skillOptions = [
 
 const learningFormatOptions = [
   { id: "1on1", label: "Học 1 kèm 1 (hiệu quả cao, linh hoạt thời gian)" },
-  { id: "group", label: "Học nhóm nhỏ (2-5 bạn, tương tác tốt, tiết kiệm chi phí)" },
+  {
+    id: "group",
+    label: "Học nhóm nhỏ (2-5 bạn, tương tác tốt, tiết kiệm chi phí)",
+  },
   { id: "online", label: "Học lớp online qua Zoom/Meet" },
   { id: "offline", label: "Học trực tiếp" },
 ];
@@ -76,7 +79,7 @@ interface FormData {
   phone: string;
   age: string;
   socialLink: string;
-  
+
   // Part 2: Learning Info
   currentLevel: string;
   specificLevel: string;
@@ -84,17 +87,17 @@ interface FormData {
   otherPurpose: string;
   skills: string[];
   goals: string;
-  
+
   // Part 3: Class Preferences
   learningFormats: string[];
   sessionsPerWeek: string;
-  
+
   // Part 4: Open Questions
   previousExperience: string;
   source: string;
   otherSource: string;
   additionalQuestions: string;
-  
+
   // Course
   course: string;
 }
@@ -129,7 +132,6 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
     course: preselectedCourse || "",
   });
 
-
   useEffect(() => {
     if (preselectedCourse) {
       setFormData((prev) => ({ ...prev, course: preselectedCourse }));
@@ -140,10 +142,14 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleCheckboxChange = (field: 'purposes' | 'skills' | 'learningFormats', value: string, checked: boolean) => {
+  const handleCheckboxChange = (
+    field: "purposes" | "skills" | "learningFormats",
+    value: string,
+    checked: boolean,
+  ) => {
     setFormData((prev) => ({
       ...prev,
-      [field]: checked 
+      [field]: checked
         ? [...prev[field], value]
         : prev[field].filter((item) => item !== value),
     }));
@@ -152,19 +158,31 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
   const validateStep = (step: number): boolean => {
     switch (step) {
       case 1:
-        if (!formData.name || !formData.phone || !formData.age || !formData.socialLink) {
+        if (
+          !formData.name ||
+          !formData.phone ||
+          !formData.age ||
+          !formData.socialLink
+        ) {
           toast.error("Vui lòng điền đầy đủ thông tin cá nhân!");
           return false;
         }
         return true;
       case 2:
-        if (!formData.currentLevel || formData.purposes.length === 0 || formData.skills.length === 0) {
+        if (
+          !formData.currentLevel ||
+          formData.purposes.length === 0 ||
+          formData.skills.length === 0
+        ) {
           toast.error("Vui lòng điền đầy đủ thông tin học tập!");
           return false;
         }
         return true;
       case 3:
-        if (formData.learningFormats.length === 0 || !formData.sessionsPerWeek) {
+        if (
+          formData.learningFormats.length === 0 ||
+          !formData.sessionsPerWeek
+        ) {
           toast.error("Vui lòng chọn hình thức học và số buổi!");
           return false;
         }
@@ -185,64 +203,61 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!validateStep(currentStep)) return;
+    if (!validateStep(currentStep)) return;
 
-  setIsSubmitting(true);
+    setIsSubmitting(true);
 
-  try {
-    const payload = {
-      ...formData,
-      currentLevel:
-        formData.currentLevel === "zero"
-          ? "Chưa biết gì"
-          : formData.specificLevel,
-      purposes: [...formData.purposes, formData.otherPurpose].filter(Boolean),
-      source:
-        formData.source === "other"
-          ? formData.otherSource
-          : formData.source,
-    };
+    try {
+      const payload = {
+        ...formData,
+        currentLevel:
+          formData.currentLevel === "zero"
+            ? "Chưa biết gì"
+            : formData.specificLevel,
+        purposes: [...formData.purposes, formData.otherPurpose].filter(Boolean),
+        source:
+          formData.source === "other" ? formData.otherSource : formData.source,
+      };
 
-    // Use centralized API helper which respects VITE_API_BASE_URL
-    await registerUser(payload);
+      // Use centralized API helper which respects VITE_API_BASE_URL
+      await registerUser(payload);
 
-    setIsSuccess(true);
-    toast.success("Đăng ký thành công! Chúng tôi sẽ liên hệ bạn sớm.");
+      setIsSuccess(true);
+      toast.success("Đăng ký thành công! Chúng tôi sẽ liên hệ bạn sớm.");
 
-    setTimeout(() => {
-      setIsSuccess(false);
-      setCurrentStep(1);
-      setFormData({
-        name: "",
-        phone: "",
-        age: "",
-        socialLink: "",
-        currentLevel: "",
-        specificLevel: "",
-        purposes: [],
-        otherPurpose: "",
-        skills: [],
-        goals: "",
-        learningFormats: [],
-        sessionsPerWeek: "",
-        previousExperience: "",
-        source: "",
-        otherSource: "",
-        additionalQuestions: "",
-        course: "",
-      });
-      onClose();
-    }, 2000);
-  } catch (error) {
-    console.error("Submit error:", error);
-    toast.error("Có lỗi xảy ra. Vui lòng thử lại!");
-  } finally {
-    setIsSubmitting(false);
-  }
-};
-
+      setTimeout(() => {
+        setIsSuccess(false);
+        setCurrentStep(1);
+        setFormData({
+          name: "",
+          phone: "",
+          age: "",
+          socialLink: "",
+          currentLevel: "",
+          specificLevel: "",
+          purposes: [],
+          otherPurpose: "",
+          skills: [],
+          goals: "",
+          learningFormats: [],
+          sessionsPerWeek: "",
+          previousExperience: "",
+          source: "",
+          otherSource: "",
+          additionalQuestions: "",
+          course: "",
+        });
+        onClose();
+      }, 2000);
+    } catch (error) {
+      console.error("Submit error:", error);
+      toast.error("Có lỗi xảy ra. Vui lòng thử lại!");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const renderStepIndicator = () => (
     <div className="flex items-center justify-center gap-2 mb-6">
@@ -253,8 +268,8 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
               step === currentStep
                 ? "bg-primary text-primary-foreground"
                 : step < currentStep
-                ? "bg-primary/20 text-primary"
-                : "bg-muted text-muted-foreground"
+                  ? "bg-primary/20 text-primary"
+                  : "bg-muted text-muted-foreground"
             }`}
           >
             {step}
@@ -276,7 +291,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
       <h3 className="text-lg font-semibold text-foreground mb-4">
         Phần 1: Thông Tin Cá Nhân
       </h3>
-      
+
       <div className="space-y-2">
         <Label htmlFor="name">
           Họ và tên <span className="text-destructive">*</span>
@@ -359,10 +374,11 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
       <h3 className="text-lg font-semibold text-foreground mb-4">
         Phần 2: Thông Tin Học Tập & Mục Tiêu
       </h3>
-      
+
       <div className="space-y-3">
         <Label>
-          Trình độ tiếng Trung hiện tại <span className="text-destructive">*</span>
+          Trình độ tiếng Trung hiện tại{" "}
+          <span className="text-destructive">*</span>
         </Label>
         <RadioGroup
           value={formData.currentLevel}
@@ -376,7 +392,10 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="specific" id="level-specific" />
-            <Label htmlFor="level-specific" className="font-normal cursor-pointer">
+            <Label
+              htmlFor="level-specific"
+              className="font-normal cursor-pointer"
+            >
               Đã có trình độ cụ thể
             </Label>
           </div>
@@ -394,7 +413,9 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
       <div className="space-y-3">
         <Label>
           Mục đích học tiếng Trung <span className="text-destructive">*</span>
-          <span className="text-muted-foreground text-sm ml-1">(Có thể chọn nhiều)</span>
+          <span className="text-muted-foreground text-sm ml-1">
+            (Có thể chọn nhiều)
+          </span>
         </Label>
         <div className="space-y-2">
           {purposeOptions.map((option) => (
@@ -403,10 +424,17 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                 id={`purpose-${option.id}`}
                 checked={formData.purposes.includes(option.id)}
                 onCheckedChange={(checked) =>
-                  handleCheckboxChange("purposes", option.id, checked as boolean)
+                  handleCheckboxChange(
+                    "purposes",
+                    option.id,
+                    checked as boolean,
+                  )
                 }
               />
-              <Label htmlFor={`purpose-${option.id}`} className="font-normal cursor-pointer">
+              <Label
+                htmlFor={`purpose-${option.id}`}
+                className="font-normal cursor-pointer"
+              >
                 {option.label}
               </Label>
             </div>
@@ -419,7 +447,10 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                 handleCheckboxChange("purposes", "other", checked as boolean)
               }
             />
-            <Label htmlFor="purpose-other" className="font-normal cursor-pointer">
+            <Label
+              htmlFor="purpose-other"
+              className="font-normal cursor-pointer"
+            >
               Khác
             </Label>
           </div>
@@ -436,7 +467,8 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
 
       <div className="space-y-3">
         <Label>
-          Kỹ năng muốn cải thiện nhất <span className="text-destructive">*</span>
+          Kỹ năng muốn cải thiện nhất{" "}
+          <span className="text-destructive">*</span>
         </Label>
         <div className="space-y-2">
           {skillOptions.map((option) => (
@@ -448,7 +480,10 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                   handleCheckboxChange("skills", option.id, checked as boolean)
                 }
               />
-              <Label htmlFor={`skill-${option.id}`} className="font-normal cursor-pointer">
+              <Label
+                htmlFor={`skill-${option.id}`}
+                className="font-normal cursor-pointer"
+              >
                 {option.label}
               </Label>
             </div>
@@ -457,9 +492,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="goals">
-          Mục tiêu cụ thể trong 3-6 tháng tới
-        </Label>
+        <Label htmlFor="goals">Mục tiêu cụ thể trong 3-6 tháng tới</Label>
         <Textarea
           id="goals"
           placeholder="VD: Giao tiếp được 10 chủ đề cơ bản, thi đậu HSK 3, đọc được menu nhà hàng..."
@@ -477,11 +510,13 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
       <h3 className="text-lg font-semibold text-foreground mb-4">
         Phần 3: Thông Tin Lớp Học Mong Muốn
       </h3>
-      
+
       <div className="space-y-3">
         <Label>
           Hình thức học quan tâm <span className="text-destructive">*</span>
-          <span className="text-muted-foreground text-sm ml-1">(Có thể chọn nhiều)</span>
+          <span className="text-muted-foreground text-sm ml-1">
+            (Có thể chọn nhiều)
+          </span>
         </Label>
         <div className="space-y-2">
           {learningFormatOptions.map((option) => (
@@ -490,10 +525,17 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                 id={`format-${option.id}`}
                 checked={formData.learningFormats.includes(option.id)}
                 onCheckedChange={(checked) =>
-                  handleCheckboxChange("learningFormats", option.id, checked as boolean)
+                  handleCheckboxChange(
+                    "learningFormats",
+                    option.id,
+                    checked as boolean,
+                  )
                 }
               />
-              <Label htmlFor={`format-${option.id}`} className="font-normal cursor-pointer">
+              <Label
+                htmlFor={`format-${option.id}`}
+                className="font-normal cursor-pointer"
+              >
                 {option.label}
               </Label>
             </div>
@@ -512,7 +554,10 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
           {sessionsOptions.map((option) => (
             <div key={option.id} className="flex items-center space-x-2">
               <RadioGroupItem value={option.id} id={`sessions-${option.id}`} />
-              <Label htmlFor={`sessions-${option.id}`} className="font-normal cursor-pointer">
+              <Label
+                htmlFor={`sessions-${option.id}`}
+                className="font-normal cursor-pointer"
+              >
                 {option.label}
               </Label>
             </div>
@@ -527,7 +572,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
       <h3 className="text-lg font-semibold text-foreground mb-4">
         Phần 4: Câu Hỏi Mở & Tìm Hiểu Thêm
       </h3>
-      
+
       <div className="space-y-2">
         <Label htmlFor="previousExperience">
           Bạn đã từng học tiếng Trung chưa? Nếu rồi, đâu là khó khăn lớn nhất?
@@ -551,14 +596,20 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
           {sourceOptions.map((option) => (
             <div key={option.id} className="flex items-center space-x-2">
               <RadioGroupItem value={option.id} id={`source-${option.id}`} />
-              <Label htmlFor={`source-${option.id}`} className="font-normal cursor-pointer">
+              <Label
+                htmlFor={`source-${option.id}`}
+                className="font-normal cursor-pointer"
+              >
                 {option.label}
               </Label>
             </div>
           ))}
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="other" id="source-other" />
-            <Label htmlFor="source-other" className="font-normal cursor-pointer">
+            <Label
+              htmlFor="source-other"
+              className="font-normal cursor-pointer"
+            >
               Khác
             </Label>
           </div>
@@ -644,7 +695,11 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ type: "spring", damping: 10, stiffness: 100 }}
+                      transition={{
+                        type: "spring",
+                        damping: 10,
+                        stiffness: 100,
+                      }}
                       className="w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4"
                     >
                       <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400" />
@@ -653,7 +708,8 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                       Đăng ký thành công!
                     </h3>
                     <p className="text-muted-foreground text-center mb-6">
-                      Cảm ơn bạn đã đăng ký. Chúng tôi sẽ liên hệ bạn trong thời gian sớm nhất!
+                      Cảm ơn bạn đã đăng ký. Chúng tôi sẽ liên hệ bạn trong thời
+                      gian sớm nhất!
                     </p>
                     <Button onClick={onClose} variant="outline">
                       Đóng
@@ -667,7 +723,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                     exit={{ opacity: 0 }}
                   >
                     {renderStepIndicator()}
-                    
+
                     <form onSubmit={handleSubmit}>
                       <AnimatePresence mode="wait">
                         <motion.div
@@ -695,7 +751,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({
                         >
                           Quay lại
                         </Button>
-                        
+
                         {currentStep < totalSteps ? (
                           <Button type="button" onClick={nextStep}>
                             Tiếp tục

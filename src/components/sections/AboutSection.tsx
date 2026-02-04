@@ -7,7 +7,8 @@ const features = [
   {
     icon: GraduationCap,
     title: "Du học sinh Trung Quốc",
-    description: "Sống và học tập tại Trung Quốc, hiểu sâu về văn hóa và ngôn ngữ",
+    description:
+      "Sống và học tập tại Trung Quốc, hiểu sâu về văn hóa và ngôn ngữ",
   },
   {
     icon: Globe,
@@ -46,7 +47,9 @@ const AboutSection = () => {
             Tại sao chọn học với <span className="text-gradient">MeoHi</span>?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Với kinh nghiệm du học và sinh sống tại Trung Quốc, tôi hiểu rõ những khó khăn khi học tiếng Trung và sẽ đồng hành cùng bạn trên hành trình này.
+            Với kinh nghiệm du học và sinh sống tại Trung Quốc, tôi hiểu rõ
+            những khó khăn khi học tiếng Trung và sẽ đồng hành cùng bạn trên
+            hành trình này.
           </p>
         </motion.div>
 
@@ -65,9 +68,7 @@ const AboutSection = () => {
               <h3 className="font-display text-xl font-semibold text-foreground mb-3">
                 {feature.title}
               </h3>
-              <p className="text-muted-foreground">
-                {feature.description}
-              </p>
+              <p className="text-muted-foreground">{feature.description}</p>
             </motion.div>
           ))}
         </div>
@@ -85,7 +86,10 @@ const AboutSection = () => {
                 Câu chuyện của tôi
               </h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Từ một sinh viên Việt Nam bỡ ngỡ khi đặt chân đến Trung Quốc, đến khi trở thành người đồng hành giúp hàng trăm bạn trẻ chinh phục tiếng Trung. Hành trình này không hề dễ dàng, nhưng mỗi khó khăn đều là bài học quý giá...
+                Từ một sinh viên Việt Nam bỡ ngỡ khi đặt chân đến Trung Quốc,
+                đến khi trở thành người đồng hành giúp hàng trăm bạn trẻ chinh
+                phục tiếng Trung. Hành trình này không hề dễ dàng, nhưng mỗi khó
+                khăn đều là bài học quý giá...
               </p>
               <p className="text-sm text-primary font-medium">
                 📖 Đọc thêm câu chuyện trong phần Stories
@@ -93,7 +97,9 @@ const AboutSection = () => {
             </div>
             <div className="relative">
               <div className="aspect-video bg-muted rounded-2xl flex items-center justify-center">
-                <span className="text-muted-foreground">🎬 Video giới thiệu sắp ra mắt</span>
+                <span className="text-muted-foreground">
+                  🎬 Video giới thiệu sắp ra mắt
+                </span>
               </div>
             </div>
           </div>
