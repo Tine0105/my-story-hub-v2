@@ -7,28 +7,32 @@ const testimonials = [
   {
     name: "Nguyễn Thị Mai",
     role: "Học viên HSK 3",
-    content: "Cô dạy rất dễ hiểu và tận tâm! Mình từ zero tiếng Trung, sau 3 tháng đã có thể giao tiếp cơ bản được rồi. Cảm ơn cô nhiều lắm! 💕",
+    content:
+      "Cô dạy rất dễ hiểu và tận tâm! Mình từ zero tiếng Trung, sau 3 tháng đã có thể giao tiếp cơ bản được rồi. Cảm ơn cô nhiều lắm! 💕",
     rating: 5,
     platform: "Facebook",
   },
   {
     name: "Trần Văn Hùng",
     role: "Học viên HSK 4",
-    content: "Phương pháp dạy rất thực tế, không chỉ học ngữ pháp mà còn được học cả văn hóa Trung Quốc. Thi HSK 4 đỗ ngay lần đầu!",
+    content:
+      "Phương pháp dạy rất thực tế, không chỉ học ngữ pháp mà còn được học cả văn hóa Trung Quốc. Thi HSK 4 đỗ ngay lần đầu!",
     rating: 5,
     platform: "TikTok",
   },
   {
     name: "Lê Thị Hương",
     role: "Học viên giao tiếp",
-    content: "Lớp học rất vui và sôi động. Cô MeoHi tạo môi trường học thoải mái, mình không còn sợ nói tiếng Trung nữa!",
+    content:
+      "Lớp học rất vui và sôi động. Cô MeoHi tạo môi trường học thoải mái, mình không còn sợ nói tiếng Trung nữa!",
     rating: 5,
     platform: "Facebook",
   },
   {
     name: "Phạm Đức Anh",
     role: "Học viên HSK 5",
-    content: "Đã học nhiều nơi nhưng ở đây thấy hiệu quả nhất. Cô hỗ trợ rất nhiệt tình, reply tin nhắn nhanh lắm!",
+    content:
+      "Đã học nhiều nơi nhưng ở đây thấy hiệu quả nhất. Cô hỗ trợ rất nhiệt tình, reply tin nhắn nhanh lắm!",
     rating: 5,
     platform: "TikTok",
   },
@@ -54,7 +58,8 @@ const TestimonialsSection = () => {
             Học viên nói gì về <span className="text-gradient">MeoHi</span>?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Hàng trăm học viên đã tin tưởng và đồng hành cùng tôi trên hành trình chinh phục tiếng Trung
+            Hàng trăm học viên đã tin tưởng và đồng hành cùng tôi trên hành
+            trình chinh phục tiếng Trung
           </p>
         </motion.div>
 
@@ -72,8 +77,12 @@ const TestimonialsSection = () => {
                   {testimonial.name.charAt(0)}
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                  <h4 className="font-semibold text-foreground">
+                    {testimonial.name}
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    {testimonial.role}
+                  </p>
                 </div>
                 <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
                   {testimonial.platform}
@@ -87,7 +96,10 @@ const TestimonialsSection = () => {
               </div>
 
               <div className="relative">
-                <Quote size={24} className="absolute -top-2 -left-2 text-primary/20" />
+                <Quote
+                  size={24}
+                  className="absolute -top-2 -left-2 text-primary/20"
+                />
                 <p className="text-muted-foreground pl-4 leading-relaxed">
                   {testimonial.content}
                 </p>
@@ -106,7 +118,10 @@ const TestimonialsSection = () => {
           <p className="text-muted-foreground mb-2">
             Bạn cũng muốn chia sẻ trải nghiệm học tập?
           </p>
-          <a href="#contact" className="text-primary font-medium hover:underline">
+          <a
+            href="#contact"
+            className="text-primary font-medium hover:underline"
+          >
             Để lại nhận xét của bạn →
           </a>
         </motion.div>

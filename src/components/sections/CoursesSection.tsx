@@ -2,7 +2,15 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Check, Star, Clock, BookOpen, ChevronDown, ChevronUp, AlertCircle } from "lucide-react";
+import {
+  Check,
+  Star,
+  Clock,
+  BookOpen,
+  ChevronDown,
+  ChevronUp,
+  AlertCircle,
+} from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -63,15 +71,18 @@ const courses = [
 const classRules = [
   {
     number: 1,
-    content: "Gia sư xin nghỉ xin phép trước 1 ngày, học viên nghỉ học báo trước 4 tiếng nếu không tính một buổi.",
+    content:
+      "Gia sư xin nghỉ xin phép trước 1 ngày, học viên nghỉ học báo trước 4 tiếng nếu không tính một buổi.",
   },
   {
     number: 2,
-    content: "Xin nghỉ quá 40% buổi học xin hoàn lại 20% tiền học và ngưng lớp.",
+    content:
+      "Xin nghỉ quá 40% buổi học xin hoàn lại 20% tiền học và ngưng lớp.",
   },
   {
     number: 3,
-    content: "Học viên trước khi học xem trước bài, sau khi học ôn tập và làm bài tập để bắt đầu buổi học mới.",
+    content:
+      "Học viên trước khi học xem trước bài, sau khi học ôn tập và làm bài tập để bắt đầu buổi học mới.",
   },
 ];
 
@@ -98,7 +109,8 @@ const CoursesSection = () => {
             Chọn khóa học <span className="text-gradient">phù hợp</span> với bạn
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Các khóa học được thiết kế theo cấp độ HSK chuẩn quốc tế, phù hợp với mọi nhu cầu học tập
+            Các khóa học được thiết kế theo cấp độ HSK chuẩn quốc tế, phù hợp
+            với mọi nhu cầu học tập
           </p>
 
           {/* Class Rules Collapsible */}
@@ -108,13 +120,14 @@ const CoursesSection = () => {
             className="max-w-2xl mx-auto"
           >
             <CollapsibleTrigger asChild>
-              <Button
-                variant="heroOutline"
-                className="w-full md:w-auto gap-2"
-              >
+              <Button variant="heroOutline" className="w-full md:w-auto gap-2">
                 <AlertCircle size={18} />
                 Quy định lớp học
-                {isRulesOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                {isRulesOpen ? (
+                  <ChevronUp size={18} />
+                ) : (
+                  <ChevronDown size={18} />
+                )}
               </Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-4">
@@ -133,7 +146,9 @@ const CoursesSection = () => {
                       <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary font-semibold flex items-center justify-center text-sm">
                         {rule.number}
                       </span>
-                      <p className="text-muted-foreground leading-relaxed">{rule.content}</p>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {rule.content}
+                      </p>
                     </li>
                   ))}
                 </ul>
@@ -162,7 +177,9 @@ const CoursesSection = () => {
               )}
 
               <div className="text-center mb-6">
-                <span className="text-sm text-primary font-medium">{course.subtitle}</span>
+                <span className="text-sm text-primary font-medium">
+                  {course.subtitle}
+                </span>
                 <h3 className="font-display text-2xl font-bold text-foreground mt-2">
                   {course.title}
                 </h3>
@@ -202,7 +219,12 @@ const CoursesSection = () => {
                 className="w-full"
                 size="lg"
                 onClick={() => {
-                  setSelectedCourse(course.subtitle.toLowerCase().replace(" ", "").replace("-", ""));
+                  setSelectedCourse(
+                    course.subtitle
+                      .toLowerCase()
+                      .replace(" ", "")
+                      .replace("-", ""),
+                  );
                   setIsModalOpen(true);
                 }}
               >

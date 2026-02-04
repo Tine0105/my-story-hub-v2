@@ -1,13 +1,19 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
 
 // Lazy load below-the-fold sections to reduce initial bundle size
 const AboutSection = lazy(() => import("@/components/sections/AboutSection"));
-const CoursesSection = lazy(() => import("@/components/sections/CoursesSection"));
-const TestimonialsSection = lazy(() => import("@/components/sections/TestimonialsSection"));
-const ContactSection = lazy(() => import("@/components/sections/ContactSection"));
+const CoursesSection = lazy(
+  () => import("@/components/sections/CoursesSection"),
+);
+const TestimonialsSection = lazy(
+  () => import("@/components/sections/TestimonialsSection"),
+);
+const ContactSection = lazy(
+  () => import("@/components/sections/ContactSection"),
+);
 
 // Loading fallback component
 const SectionLoader = () => (
@@ -22,7 +28,7 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
-        
+
         <Suspense fallback={<SectionLoader />}>
           <AboutSection />
         </Suspense>

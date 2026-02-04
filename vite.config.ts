@@ -14,9 +14,9 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === "development" && componentTagger(),
     viteCompression({
-      algorithm: 'gzip',
-      ext: '.gz',
-    })
+      algorithm: "gzip",
+      ext: ".gz",
+    }),
   ].filter(Boolean),
   resolve: {
     alias: {
@@ -27,18 +27,27 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
-              return 'react-vendor';
+          if (id.includes("node_modules")) {
+            if (
+              id.includes("react") ||
+              id.includes("react-dom") ||
+              id.includes("react-router-dom")
+            ) {
+              return "react-vendor";
             }
-            if (id.includes('@radix-ui') || id.includes('lucide-react') || id.includes('framer-motion') || id.includes('recharts')) {
-              return 'ui-vendor';
+            if (
+              id.includes("@radix-ui") ||
+              id.includes("lucide-react") ||
+              id.includes("framer-motion") ||
+              id.includes("recharts")
+            ) {
+              return "ui-vendor";
             }
-            return 'vendor';
+            return "vendor";
           }
-        }
-      }
+        },
+      },
     },
     chunkSizeWarningLimit: 1000,
-  }
+  },
 }));

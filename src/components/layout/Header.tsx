@@ -60,7 +60,11 @@ const Header = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
           >
-            <Button variant="hero" size="sm" onClick={() => scrollToSection("#contact")}>
+            <Button
+              variant="hero"
+              size="sm"
+              onClick={() => scrollToSection("#contact")}
+            >
               Đăng ký học
             </Button>
           </motion.div>
@@ -95,7 +99,11 @@ const Header = () => {
                   {item.label}
                 </button>
               ))}
-              <Button variant="hero" size="sm" onClick={() => scrollToSection("#contact")}>
+              <Button
+                variant="hero"
+                size="sm"
+                onClick={() => scrollToSection("#contact")}
+              >
                 Đăng ký học
               </Button>
             </nav>

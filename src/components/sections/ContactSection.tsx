@@ -80,7 +80,10 @@ const ContactSection = () => {
 
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 gradient-accent rounded-xl flex items-center justify-center">
-                    <MessageCircle size={20} className="text-primary-foreground" />
+                    <MessageCircle
+                      size={20}
+                      className="text-primary-foreground"
+                    />
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Zalo</p>
@@ -94,13 +97,17 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium text-foreground">dangthikimchi.dt470@gmail.com</p>
+                    <p className="font-medium text-foreground">
+                      dangthikimchi.dt470@gmail.com
+                    </p>
                   </div>
                 </div>
               </div>
 
               <div className="border-t border-border pt-6">
-                <p className="text-sm text-muted-foreground mb-4">Theo dõi mình tại</p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Theo dõi mình tại
+                </p>
                 <div className="flex gap-4">
                   {socialLinks.map((link) => (
                     <a
@@ -124,7 +131,10 @@ const ContactSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <form onSubmit={handleSubmit} className="bg-card rounded-3xl p-8 border border-border">
+            <form
+              onSubmit={handleSubmit}
+              className="bg-card rounded-3xl p-8 border border-border"
+            >
               <h3 className="font-display text-2xl font-bold text-foreground mb-6">
                 Đăng ký tư vấn
               </h3>
@@ -137,7 +147,9 @@ const ContactSection = () => {
                   <input
                     type="text"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
                     placeholder="Nhập họ và tên của bạn"
                     required
@@ -151,7 +163,9 @@ const ContactSection = () => {
                   <input
                     type="tel"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
                     className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
                     placeholder="Nhập số điện thoại"
                     required
@@ -164,14 +178,21 @@ const ContactSection = () => {
                   </label>
                   <textarea
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     rows={4}
                     className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none"
                     placeholder="Bạn quan tâm đến khóa học nào? Có câu hỏi gì không?"
                   />
                 </div>
 
-                <Button type="submit" variant="hero" size="lg" className="w-full">
+                <Button
+                  type="submit"
+                  variant="hero"
+                  size="lg"
+                  className="w-full"
+                >
                   Gửi thông tin
                 </Button>
               </div>
